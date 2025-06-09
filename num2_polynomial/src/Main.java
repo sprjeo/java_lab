@@ -5,7 +5,6 @@ import java.util.HashMap;
 public class Main {
     public static void main(String[] args) {
 
-        // Создаем полиномы
         HashMap<Integer, Double> coeffs1 = new HashMap<>();
         coeffs1.put(2, 1.0); // x^2
         coeffs1.put(1, -2.0); // -2x

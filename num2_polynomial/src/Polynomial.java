@@ -19,7 +19,6 @@ public class Polynomial implements Comparable<Polynomial>, Cloneable {
         }
     }
 
-    // Добавление коэффициента
     public void setCoefficient(int power, double coefficient) {
         if (coefficient == 0.0) {
             coefficients.remove(power);
@@ -28,21 +27,17 @@ public class Polynomial implements Comparable<Polynomial>, Cloneable {
         }
     }
 
-    // Получение коэффициента
     public double getCoefficient(int power) {
         return coefficients.getOrDefault(power, 0.0);
     }
 
-    // Сложение полиномов
     public Polynomial add(Polynomial other) {
         Polynomial result = new Polynomial();
 
-        // Добавляем все коэффициенты из текущего полинома
         for (Map.Entry<Integer, Double> entry : this.coefficients.entrySet()) {
             result.setCoefficient(entry.getKey(), entry.getValue());
         }
 
-        // Добавляем коэффициенты из другого полинома
         for (Map.Entry<Integer, Double> entry : other.coefficients.entrySet()) {
             int power = entry.getKey();
             double newCoeff = result.getCoefficient(power) + entry.getValue();
@@ -52,16 +47,13 @@ public class Polynomial implements Comparable<Polynomial>, Cloneable {
         return result;
     }
 
-    // Вычитание полиномов
     public Polynomial subtract(Polynomial other) {
         Polynomial result = new Polynomial();
 
-        // Добавляем все коэффициенты из текущего полинома
         for (Map.Entry<Integer, Double> entry : this.coefficients.entrySet()) {
             result.setCoefficient(entry.getKey(), entry.getValue());
         }
 
-        // Вычитаем коэффициенты из другого полинома
         for (Map.Entry<Integer, Double> entry : other.coefficients.entrySet()) {
             int power = entry.getKey();
             double newCoeff = result.getCoefficient(power) - entry.getValue();
@@ -71,7 +63,6 @@ public class Polynomial implements Comparable<Polynomial>, Cloneable {
         return result;
     }
 
-    // Умножение полиномов
     public Polynomial multiply(Polynomial other) {
         Polynomial result = new Polynomial();
 
@@ -87,7 +78,6 @@ public class Polynomial implements Comparable<Polynomial>, Cloneable {
         return result;
     }
 
-    // Умножение полинома на число
     public Polynomial multiply(double scalar) {
         if (scalar == 0.0) {
             return new Polynomial();
@@ -101,7 +91,6 @@ public class Polynomial implements Comparable<Polynomial>, Cloneable {
         return result;
     }
 
-    // Деление полиномов (возвращает частное и остаток)
     public Polynomial[] divide(Polynomial divisor) {
         if (divisor.isZero()) {
             throw new ArithmeticException("Division by zero polynomial");
@@ -130,35 +119,31 @@ public class Polynomial implements Comparable<Polynomial>, Cloneable {
         return new Polynomial[]{quotient, remainder};
     }
 
-    // Получение остатка от деления
     public Polynomial mod(Polynomial divisor) {
         Polynomial[] divisionResult = this.divide(divisor);
         return divisionResult[1];
     }
 
-    // Степень полинома
     public int degree() {
         if (coefficients.isEmpty()) {
-            return -1; // Для нулевого полинома
+            return -1;
         }
         return coefficients.keySet().stream().max(Integer::compare).orElse(0);
     }
 
-    // Проверка на нулевой полином
+
     public boolean isZero() {
         return coefficients.isEmpty();
     }
 
-    // Реализация Comparable
     @Override
     public int compareTo(Polynomial other) {
-        // Сначала сравниваем по степени
+
         int degreeCompare = Integer.compare(this.degree(), other.degree());
         if (degreeCompare != 0) {
             return degreeCompare;
         }
 
-        // Если степени равны, сравниваем коэффициенты от старших к младшим
         TreeMap<Integer, Double> thisSorted = new TreeMap<>(coefficients);
         TreeMap<Integer, Double> otherSorted = new TreeMap<>(other.coefficients);
 
@@ -175,7 +160,6 @@ public class Polynomial implements Comparable<Polynomial>, Cloneable {
         return 0;
     }
 
-    // Реализация Cloneable
     @Override
     public Polynomial clone() {
         try {
@@ -187,7 +171,6 @@ public class Polynomial implements Comparable<Polynomial>, Cloneable {
         }
     }
 
-    // Переопределение equals
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -196,13 +179,11 @@ public class Polynomial implements Comparable<Polynomial>, Cloneable {
         return coefficients.equals(other.coefficients);
     }
 
-    // Переопределение hashCode
     @Override
     public int hashCode() {
         return Objects.hash(coefficients);
     }
 
-    // Переопределение toString
     @Override
     public String toString() {
         if (coefficients.isEmpty()) {

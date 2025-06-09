@@ -55,7 +55,6 @@ public class ImageProcessor {
             }
         }
 
-        // Проверка обязательных параметров для операций
         if (operation == null) {
             System.out.println("Не указана операция");
             printUsage();
@@ -95,7 +94,6 @@ public class ImageProcessor {
 
     private static void processImages(String sourceDir, boolean recursive, String operation, String operationParam)
             throws InterruptedException {
-        // Запуск потока для отслеживания нажатия ESC
         Thread cancellationThread = new Thread(() -> {
             try (Scanner scanner = new Scanner(System.in)) {
                 while (!cancellationRequested.get()) {
@@ -112,7 +110,6 @@ public class ImageProcessor {
         cancellationThread.setDaemon(true);
         cancellationThread.start();
 
-        // Сбор всех файлов изображений
         List<File> imageFiles = new ArrayList<>();
         collectImageFiles(new File(sourceDir), recursive, imageFiles);
 
@@ -124,7 +121,6 @@ public class ImageProcessor {
         System.out.println("Найдено изображений: " + imageFiles.size());
         System.out.println("Нажмите ESC для отмены операции...");
 
-        // Обработка файлов
         List<Future<?>> futures = new ArrayList<>();
         for (File file : imageFiles) {
             if (cancellationRequested.get()) break;
@@ -138,7 +134,6 @@ public class ImageProcessor {
             }));
         }
 
-        // Ожидание завершения всех задач
         for (Future<?> future : futures) {
             try {
                 future.get();
@@ -276,6 +271,6 @@ public class ImageProcessor {
         String lower = fileName.toLowerCase();
         if (lower.endsWith(".jpg") || lower.endsWith(".jpeg")) return "jpg";
         if (lower.endsWith(".png")) return "png";
-        return "jpg"; // по умолчанию
+        return "jpg";
     }
 }

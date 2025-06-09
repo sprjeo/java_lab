@@ -20,12 +20,10 @@ public class MaxNumberFinder {
         visited[x][y] = true;
         currentNumber += matrix[x][y];
 
-        // Сравниваем текущее число с максимальным
         if (currentNumber.compareTo(maxNumber) > 0) {
             maxNumber = currentNumber;
         }
 
-        // Рекурсивно обходим соседние ячейки
         for (int[] direction : directions) {
             int newX = x + direction[0];
             int newY = y + direction[1];
@@ -35,7 +33,6 @@ public class MaxNumberFinder {
             }
         }
 
-        // Возвращаемся назад и снимаем отметку о посещении
         visited[x][y] = false;
     }
 
